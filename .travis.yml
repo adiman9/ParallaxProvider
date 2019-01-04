@@ -13,8 +13,6 @@ jobs:
         - yarn build
     - stage: npm release
       script: yarn build
-      before_deploy:
-        - cd dist
       deploy:
         provider: npm
         email: '$NPM_EMAIL'
