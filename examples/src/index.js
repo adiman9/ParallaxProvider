@@ -78,6 +78,7 @@ function turtleExpand(offset, duration) {
 
 export default new ParallaxProvider([
   {
+    id: 1,
     mountPoint: 0,
     duration: 500,
     controller: phaseOne,
@@ -93,8 +94,8 @@ export default new ParallaxProvider([
     controller: phaseTwo,
   },
   {
-    mountPoint: 1300,
-    mountType: 'absolute',
+    mountPoint: 800,
+    mountAfterId: 1,
     duration: 500,
     controller: turtleExpand,
   },

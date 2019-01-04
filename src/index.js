@@ -8,6 +8,7 @@ export default class ParallaxProvider {
 
   init() {
     const newModules = [];
+    const moduleMap = [];
 
     for (let i = 0; i < this.modules.length; i++) {
       const module = this.modules[i];
@@ -27,11 +28,40 @@ export default class ParallaxProvider {
 
       if (module.mountType === 'absolute') {
         absMountPoint = module.mountPoint;
+      } else if (Object.prototype.hasOwnProperty.call(module, 'mountAfterId')) {
+        if (module.mountAfterId === module.id) {
+          throw new Error("Can't mount module relative to itself");
+        }
+        if (numNewModules === 0) {
+          throw new Error("First module can't use mountAfterId");
+        }
+        if (!moduleMap[module.mountAfterId]) {
+          throw new Error(
+            `Trying to mount module after id ${
+              module.mountAfterId
+            } which does not exist. Be aware that you can only mount after a module that is declared before the current module in the modules array`,
+          );
+        }
+        const mountAfter = moduleMap[module.mountAfterId];
+        const mountAfterDur = mountAfter.duration;
+        absMountPoint =
+          mountAfter._absMountPoint + mountAfterDur + module.mountPoint;
       }
 
       module._absMountPoint = absMountPoint;
 
       newModules.push(module);
+
+      if (moduleMap[module.id]) {
+        throw new Error(
+          `Module id ${
+            module.id
+          } is a duplicate. Please give every module a unique ID`,
+        );
+      }
+      if (Object.prototype.hasOwnProperty.call(module, 'id')) {
+        moduleMap[module.id] = module;
+      }
     }
 
     this.modules = newModules;
