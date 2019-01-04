@@ -5,9 +5,7 @@ const mg = document.querySelector('.middleground');
 const bg = document.querySelector('.background');
 const title = document.querySelector('.firstpage h1');
 
-function phaseOne(offset) {
-  const duration = 500;
-
+function phaseOne(offset, duration) {
   if (offset < duration) {
     const scaleAmt = 0.4 * Math.min(offset / duration, 1);
     fg.style.transform = `scale(${1 + scaleAmt})`;
@@ -20,6 +18,7 @@ function phaseOne(offset) {
 export default new ParallaxProvider([
   {
     mountPoint: 0,
+    duration: 500,
     controller: phaseOne,
   },
 ]);

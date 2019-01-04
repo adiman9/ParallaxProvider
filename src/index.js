@@ -11,7 +11,7 @@ export default class ParallaxProvider {
       const yoff = window.pageYOffset;
 
       this.modules.forEach(module => {
-        module.controller(yoff - module.mountPoint);
+        module.controller(yoff - module.mountPoint, module.duration);
       });
     });
   }
