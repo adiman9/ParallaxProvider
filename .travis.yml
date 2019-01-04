@@ -2,27 +2,25 @@ language: node_js
 node_js:
   - '8'
 cache: yarn
-script:
-  - yarn lint
-  - yarn test
-  - yarn build
 install:
   - yarn install
 jobs:
   include:
+    - stage: Build and test
+      script:
+        - yarn lint
+        - yarn test
+        - yarn build
     - stage: npm release
-      if: tag IS present
-      node_js: "8"
       script: yarn build
-      before_deploy:
-        - cd dist
       deploy:
         provider: npm
-        email: "$NPM_EMAIL"
-        api_key: "$NPM_TOKEN"
+        email: '$NPM_EMAIL'
+        api_key: '$NPM_TOKEN'
         skip_cleanup: true
         on:
           tags: true
 branches:
   only:
     - master
+    - /^v[0-9]+.*$/
