@@ -2,19 +2,16 @@ language: node_js
 node_js:
   - '8'
 cache: yarn
-script:
-  - yarn lint
-  - yarn test
-  - yarn build
 install:
   - yarn install
 jobs:
   include:
-    - stage: test
-      node_js: '8'
-      script: yarn test
+    - stage: Build and test
+      script:
+        - yarn lint
+        - yarn test
+        - yarn build
     - stage: npm release
-      node_js: '8'
       script: yarn build
       before_deploy:
         - cd dist
