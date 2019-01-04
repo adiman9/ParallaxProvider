@@ -6,6 +6,16 @@ const mg = document.querySelector('.middleground');
 const bg = document.querySelector('.background');
 const title = document.querySelector('.firstpage h1');
 const phaseTwoTitleParts = document.querySelectorAll('.secondpage h1 span');
+const logoimg = document.querySelector('.turtlemascot');
+
+// Tweening
+function easeOutBack(t, b, c, d, s) {
+  let v = s;
+  let p = t;
+  if (s === undefined) v = 1.70158;
+  const val = c * ((p = p / d - 1) * p * ((v + 1) * p + v) + 1) + b;
+  return val;
+}
 
 function phaseOne(offset, duration) {
   if (offset < duration) {
@@ -57,6 +67,15 @@ function phaseTwo(offset, duration) {
   }
 }
 
+function turtleExpand(offset, duration) {
+  if (offset < 0) {
+    logoimg.style.transform = `scale(0)`;
+  } else if (offset < duration) {
+    const scaleAmt = easeOutBack(offset, 0, 1.1, duration);
+    logoimg.style.transform = `scale(${scaleAmt})`;
+  }
+}
+
 export default new ParallaxProvider([
   {
     mountPoint: 0,
@@ -72,5 +91,10 @@ export default new ParallaxProvider([
     mountPoint: 0,
     duration: 1000,
     controller: phaseTwo,
+  },
+  {
+    mountPoint: -500,
+    duration: 500,
+    controller: turtleExpand,
   },
 ]);
