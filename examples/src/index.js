@@ -1,12 +1,16 @@
 import ParallaxProvider from '../../src';
 
 const firstpage = document.querySelector('.firstpage');
+const thirdpage = document.querySelector('.thirdpage');
 const fg = document.querySelector('.foreground');
 const mg = document.querySelector('.middleground');
 const bg = document.querySelector('.background');
 const title = document.querySelector('.firstpage h1');
 const phaseTwoTitleParts = document.querySelectorAll('.secondpage h1 span');
 const logoimg = document.querySelector('.turtlemascot');
+const app = document.querySelector('#app');
+const imgs = document.querySelectorAll('.img');
+const progressLine = document.querySelector('.progress-line');
 
 // Tweening
 function easeOutBack(t, b, c, d, s) {
@@ -76,6 +80,35 @@ function turtleExpand(offset, duration) {
   }
 }
 
+function getHeightOfEl(el) {
+  const styles = window.getComputedStyle(el);
+  const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
+  const height = el.clientHeight || el.offsetHeight || el.scrollHeight;
+
+  return Math.ceil(height + margin);
+}
+
+function calcScroll(offset, duration) {
+  if (offset < 0) {
+    app.style.transform = `translate3d(0, 0, 0)`;
+  } else if (offset < duration) {
+    app.style.transform = `translate3d(0, -${offset}px, 0)`;
+    imgs[0].style.transform = `translate3d(0, -${offset * 0.1}px, 0)`;
+    imgs[1].style.transform = `translate3d(0, -${offset * 0.25}px, 0)`;
+
+    const progressTrigger = duration * 0.2;
+
+    if (offset > progressTrigger) {
+      const progressDur = duration - progressTrigger;
+      const progressOff = offset - progressTrigger;
+      const progress = Math.min(1, progressOff / progressDur) * 100;
+      progressLine.style.transform = `translate3d(0, -${100 - progress}%, 0)`;
+    } else {
+      progressLine.style.transform = `translate3d(0, -100%, 0)`;
+    }
+  }
+}
+
 export default new ParallaxProvider([
   {
     id: 1,
@@ -98,5 +131,10 @@ export default new ParallaxProvider([
     mountAfterId: 1,
     duration: 500,
     controller: turtleExpand,
+  },
+  {
+    mountPoint: 100,
+    duration: () => getHeightOfEl(thirdpage),
+    controller: calcScroll,
   },
 ]);
