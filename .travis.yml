@@ -13,6 +13,18 @@ jobs:
     - stage: test
       node_js: '8'
       script: yarn test
+    - stage: npm release
+      node_js: '8'
+      script: yarn build
+      before_deploy:
+        - cd dist
+      deploy:
+        provider: npm
+        email: '$NPM_EMAIL'
+        api_key: '$NPM_TOKEN'
+        skip_cleanup: true
+        on:
+          tags: true
 branches:
   only:
     - master
