@@ -8,6 +8,11 @@ script:
   - yarn build
 install:
   - yarn install
+jobs:
+  include:
+    - stage: test
+      node_js: '8'
+      script: yarn test
 branches:
   only:
     - master
