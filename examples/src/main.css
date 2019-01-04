@@ -4,11 +4,12 @@
 }
 
 #app {
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 2000px; /* for testing */
 }
 
 .firstpage,
@@ -22,12 +23,12 @@
 }
 
 .firstpage {
-  background: #71B1D9;
+  background: #71b1d9;
   z-index: 2;
 }
 
 .secondpage {
-  background: #CABAAD;
+  background: #cabaad;
 }
 
 .thirdpage {
@@ -75,45 +76,42 @@
 }
 
 .background {
-
 }
 
 .middleground {
-
 }
 
 .foreground {
-
 }
 
 .bg-block {
-  background: #C3AF9D;
+  background: #c3af9d;
   position: absolute;
   bottom: -10vh;
   left: 0;
   width: 100%;
   height: 40vh;
-  transform: skewY(-2deg)
+  transform: skewY(-2deg);
 }
 
 .mg-block {
-  background: #AB805C;
+  background: #ab805c;
   position: absolute;
   bottom: -45vh;
   left: -30vw;
   width: 100%;
   height: 40vh;
-  transform: skewY(40deg)
+  transform: skewY(40deg);
 }
 
 .fg-block {
-  background: #6D5A44;
+  background: #6d5a44;
   position: absolute;
   bottom: -45vh;
   left: 0;
   width: 100%;
   height: 60vh;
-  transform: skewY(-20deg)
+  transform: skewY(-20deg);
 }
 
 .firstpage h1 {
@@ -129,8 +127,8 @@
   font-size: 5vw;
   left: 26vw;
   bottom: 24vw;
-  color: #FDEABF;
-  transform: scale(1.31744)
+  color: #fdeabf;
+  transform: scale(1.31744);
 }
 
 .secondpage h1 span {

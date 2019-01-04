@@ -1,4 +1,14 @@
-import ParallaxProvider from '../../src/';
+import ParallaxProvider from '../../src';
 
-console.log('Working');
+const {log} = window.console;
 
+function phaseOne(offset) {
+  log('phase one', offset);
+}
+
+export default new ParallaxProvider([
+  {
+    mountPoint: 0,
+    controller: phaseOne,
+  },
+]);
