@@ -17,6 +17,7 @@
     "cover": "jest src --coverage",
     "clean": "rimfar dist",
     "precommit": "yarn lint && yarn test",
+    "format": "prettier --write \"src/**/*.+(js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue)\"",
     "prepublishOnly": "yarn clean && yarn lint && yarn test && yarn build"
   },
   "files": [
@@ -32,10 +33,12 @@
     "chalk": "^2.0.1",
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^22.1.2",
     "husky": "^1.3.1",
     "jest": "^23.6.0",
+    "prettier": "^1.15.3",
     "rimraf": "^2.6.3",
     "rollup": "^1.0.1",
     "rollup-plugin-babel": "^4.2.0"
@@ -47,12 +50,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/adiman9/parallax-provider.git"
+    "url": "https://github.com/adiman9/ParallaxProvider.git"
   },
   "bugs": {
-    "url": "https://github.com/adiman9/parallax-provider/issues"
+    "url": "https://github.com/adiman9/ParallaxProvider/issues"
   },
-  "homepage": "https://github.com/adiman9/parallax-provider#readme",
+  "homepage": "https://github.com/adiman9/ParallaxProvider#readme",
   "dependencies": {},
   "husky": {
     "hooks": {
