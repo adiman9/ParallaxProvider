@@ -93,7 +93,8 @@ export default new ParallaxProvider([
     controller: phaseTwo,
   },
   {
-    mountPoint: -500,
+    mountPoint: 1300,
+    mountType: 'absolute',
     duration: 500,
     controller: turtleExpand,
   },

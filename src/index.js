@@ -23,7 +23,12 @@ export default class ParallaxProvider {
         endPrevModule = previousModule._absMountPoint + prevDuration;
       }
 
-      const absMountPoint = endPrevModule + module.mountPoint;
+      let absMountPoint = endPrevModule + module.mountPoint;
+
+      if (module.mountType === 'absolute') {
+        absMountPoint = module.mountPoint;
+      }
+
       module._absMountPoint = absMountPoint;
 
       newModules.push(module);
