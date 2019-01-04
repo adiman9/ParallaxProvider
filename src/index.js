@@ -66,15 +66,7 @@ export default class ParallaxProvider {
 
     this.modules = newModules;
     this.calcMinHeight();
-
-    window.addEventListener('scroll', () => {
-      this.calcMinHeight();
-      const yoff = window.pageYOffset;
-
-      this.modules.forEach(module => {
-        module.controller(yoff - module._absMountPoint, module.duration);
-      });
-    });
+    this.listenToScroll();
   }
 
   calcMinHeight() {
@@ -86,5 +78,16 @@ export default class ParallaxProvider {
       finalEndTime = endTime > finalEndTime ? endTime : finalEndTime;
     }
     document.body.style.minHeight = `${finalEndTime + window.innerHeight}px`;
+  }
+
+  listenToScroll() {
+    window.addEventListener('scroll', () => {
+      this.calcMinHeight();
+      const yoff = window.pageYOffset;
+
+      this.modules.forEach(module => {
+        module.controller(yoff - module._absMountPoint, module.duration);
+      });
+    });
   }
 }
