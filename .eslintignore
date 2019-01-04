@@ -2,3 +2,4 @@ tests
 package.json
 node_modules
 *.css
+*.md

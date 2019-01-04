@@ -1,4 +1,4 @@
-import ParallaxProvider from '../../src';
+import ParallaxProvider from '../../../src';
 
 const firstpage = document.querySelector('.firstpage');
 const thirdpage = document.querySelector('.thirdpage');
