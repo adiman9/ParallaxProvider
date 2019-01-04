@@ -15,7 +15,7 @@
     "test": "jest",
     "test:watch": "jest src --watch --notify",
     "cover": "jest src --coverage",
-    "clean": "rimfar dist",
+    "clean": "rimraf dist",
     "precommit": "lint-staged",
     "format": "prettier --write \"src/**/*.+(js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue)\"",
     "prepublishOnly": "yarn clean && yarn lint && yarn test && yarn build"
