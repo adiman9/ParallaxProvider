@@ -30,13 +30,26 @@ export default class ParallaxProvider {
     }
 
     this.modules = newModules;
+    this.calcMinHeight();
 
     window.addEventListener('scroll', () => {
+      this.calcMinHeight();
       const yoff = window.pageYOffset;
 
       this.modules.forEach(module => {
         module.controller(yoff - module._absMountPoint, module.duration);
       });
     });
+  }
+
+  calcMinHeight() {
+    let finalEndTime = 0;
+    for (let i = 0; i < this.modules.length; i++) {
+      const module = this.modules[i];
+      const moduleDur = module.duration;
+      const endTime = module._absMountPoint + moduleDur;
+      finalEndTime = endTime > finalEndTime ? endTime : finalEndTime;
+    }
+    document.body.style.minHeight = `${finalEndTime + window.innerHeight}px`;
   }
 }
