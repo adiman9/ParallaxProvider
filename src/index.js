@@ -20,7 +20,10 @@ export default class ParallaxProvider {
 
       let endPrevModule = 0;
       if (previousModule) {
-        const prevDuration = previousModule.duration;
+        const prevDuration =
+          typeof previousModule.duration === 'function'
+            ? previousModule.duration()
+            : previousModule.duration;
         endPrevModule = previousModule._absMountPoint + prevDuration;
       }
 
@@ -43,7 +46,10 @@ export default class ParallaxProvider {
           );
         }
         const mountAfter = moduleMap[module.mountAfterId];
-        const mountAfterDur = mountAfter.duration;
+        const mountAfterDur =
+          typeof mountAfter.duration === 'function'
+            ? mountAfter.duration()
+            : mountAfter.duration;
         absMountPoint =
           mountAfter._absMountPoint + mountAfterDur + module.mountPoint;
       }
@@ -73,7 +79,10 @@ export default class ParallaxProvider {
     let finalEndTime = 0;
     for (let i = 0; i < this.modules.length; i++) {
       const module = this.modules[i];
-      const moduleDur = module.duration;
+      const moduleDur =
+        typeof module.duration === 'function'
+          ? module.duration()
+          : module.duration;
       const endTime = module._absMountPoint + moduleDur;
       finalEndTime = endTime > finalEndTime ? endTime : finalEndTime;
     }
@@ -86,7 +95,11 @@ export default class ParallaxProvider {
       const yoff = window.pageYOffset;
 
       this.modules.forEach(module => {
-        module.controller(yoff - module._absMountPoint, module.duration);
+        const duration =
+          typeof module.duration === 'function'
+            ? module.duration()
+            : module.duration;
+        module.controller(yoff - module._absMountPoint, duration);
       });
     });
   }
