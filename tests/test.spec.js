@@ -344,9 +344,3 @@ describe('Error states', () => {
     }).toThrow(Error);
   });
 });
-
-// TODO Tue 08 Jan 2019 19:23:42 GMT
-// use different types as id to see what happens
-// missing properties in module obj (ie provide defaults)
-//
-// provide warning when using mountAfterId and absolute mount type together
