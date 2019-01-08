@@ -14,7 +14,7 @@
     "lint": "eslint src",
     "test": "jest",
     "test:watch": "jest src --watch --notify",
-    "cover": "jest src --coverage",
+    "cover": "jest --coverage",
     "clean": "rimraf dist",
     "precommit": "lint-staged",
     "format": "prettier --write \"src/**/*.+(js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue)\"",
