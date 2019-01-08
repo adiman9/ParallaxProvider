@@ -16,9 +16,10 @@ used for creative art and many other ideas too.
 
 ## Feature ideas
 
-- [ ] Use a custom html attribute that will tell the library to grab a reference to
-it instead of having to do `document.querySelector` in the client code. 
+- [ ] Use a custom html attribute that will tell the library to grab a reference
+      to it instead of having to do `document.querySelector` in the client code.
 - [ ] Provide built in tweening helpers
+- [ ] Ability to add new modules after the library has been instantiated.
 
 ## Contributing
 
