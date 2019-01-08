@@ -1,7 +1,5 @@
 import ParallaxProvider from '../src';
 
-beforeAll;
-
 test('it correctly adds one module to modules array', () => {
   const p = new ParallaxProvider([{}]);
   expect(p.modules.length).toBe(1);
@@ -23,170 +21,91 @@ test('calls window.addEventListener() for scroll event', () => {
   );
 });
 
-test('it calls the controller on scroll', () => {
-  const events = {};
-  global.addEventListener = jest.fn((event, cb) => {
-    events[event] = cb;
+describe('scroll events with multiple sections', () => {
+  let events = {};
+  let sectionOneCtrl = jest.fn();
+  let sectionTwoCtrl = jest.fn();
+  let sectionOneDur = 500;
+  let sectionTwoDur = 800;
+
+  beforeEach(() => {
+    events = {};
+    global.addEventListener = jest.fn((event, cb) => {
+      events[event] = cb;
+    });
+
+    const p = new ParallaxProvider([
+      {
+        mountPoint: 0,
+        duration: sectionOneDur,
+        controller: sectionOneCtrl,
+      },
+      {
+        mountPoint: 0,
+        duration: sectionTwoDur,
+        controller: sectionTwoCtrl,
+      },
+    ]);
   });
 
-  const sectionCtrl = jest.fn();
+  test('it calls the controller on scroll', () => {
+    events.scroll();
 
-  const p = new ParallaxProvider([
-    {
-      mountPoint: 0,
-      duration: 500,
-      controller: sectionCtrl,
-    },
-  ]);
-
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalled();
-});
-
-test('correct offset when scroll is inside the section', () => {
-  const events = {};
-  global.addEventListener = jest.fn((event, cb) => {
-    events[event] = cb;
+    expect(sectionOneCtrl).toHaveBeenCalled();
   });
-  global.pageYOffset = 10;
 
-  const sectionCtrl = jest.fn();
-  const duration = 500;
+  test('correct offset when scroll is inside the section', () => {
+    global.pageYOffset = 10;
 
-  const p = new ParallaxProvider([
-    {
-      mountPoint: 0,
-      duration: duration,
-      controller: sectionCtrl,
-    },
-  ]);
+    events.scroll();
 
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalledWith(global.pageYOffset, duration);
-
-  global.pageYOffset = 1000;
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalledWith(global.pageYOffset, duration);
-});
-
-test('correct offset after section', () => {
-  const events = {};
-  global.addEventListener = jest.fn((event, cb) => {
-    events[event] = cb;
+    expect(sectionOneCtrl).toHaveBeenCalledWith(
+      global.pageYOffset,
+      sectionOneDur,
+    );
   });
-  global.pageYOffset = 1000;
 
-  const sectionCtrl = jest.fn();
-  const duration = 500;
+  test('correct offset after section', () => {
+    global.pageYOffset = 1000;
 
-  const p = new ParallaxProvider([
-    {
-      mountPoint: 0,
-      duration: duration,
-      controller: sectionCtrl,
-    },
-  ]);
+    events.scroll();
 
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalledWith(global.pageYOffset, duration);
-});
-
-test('correct offset when before section', () => {
-  const events = {};
-  global.addEventListener = jest.fn((event, cb) => {
-    events[event] = cb;
+    expect(sectionOneCtrl).toHaveBeenCalledWith(
+      global.pageYOffset,
+      sectionOneDur,
+    );
   });
-  global.pageYOffset = 10;
 
-  const sectionCtrl = jest.fn();
-  const sectionOneDur = 500;
-  const sectionTwoDur = 800;
+  test('correct offset when before section two', () => {
+    global.pageYOffset = 10;
 
-  const p = new ParallaxProvider([
-    {
-      mountPoint: 0,
-      duration: sectionOneDur,
-      controller: () => {},
-    },
-    {
-      mountPoint: 0,
-      duration: sectionTwoDur,
-      controller: sectionCtrl,
-    },
-  ]);
+    events.scroll();
 
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalledWith(
-    global.pageYOffset - sectionOneDur,
-    sectionTwoDur,
-  );
-});
-
-test('correct offset during section two', () => {
-  const events = {};
-  global.addEventListener = jest.fn((event, cb) => {
-    events[event] = cb;
+    expect(sectionTwoCtrl).toHaveBeenCalledWith(
+      global.pageYOffset - sectionOneDur,
+      sectionTwoDur,
+    );
   });
-  global.pageYOffset = 550;
 
-  const sectionCtrl = jest.fn();
-  const sectionOneDur = 500;
-  const sectionTwoDur = 800;
+  test('correct offset during section two', () => {
+    global.pageYOffset = 550;
 
-  const p = new ParallaxProvider([
-    {
-      mountPoint: 0,
-      duration: sectionOneDur,
-      controller: () => {},
-    },
-    {
-      mountPoint: 0,
-      duration: sectionTwoDur,
-      controller: sectionCtrl,
-    },
-  ]);
+    events.scroll();
 
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalledWith(
-    global.pageYOffset - sectionOneDur,
-    sectionTwoDur,
-  );
-});
-
-test('correct offset after section two', () => {
-  const events = {};
-  global.addEventListener = jest.fn((event, cb) => {
-    events[event] = cb;
+    expect(sectionTwoCtrl).toHaveBeenCalledWith(
+      global.pageYOffset - sectionOneDur,
+      sectionTwoDur,
+    );
   });
-  global.pageYOffset = 5000;
 
-  const sectionCtrl = jest.fn();
-  const sectionOneDur = 500;
-  const sectionTwoDur = 800;
+  test('correct offset after section two', () => {
+    global.pageYOffset = 5000;
 
-  const p = new ParallaxProvider([
-    {
-      mountPoint: 0,
-      duration: sectionOneDur,
-      controller: () => {},
-    },
-    {
-      mountPoint: 0,
-      duration: sectionTwoDur,
-      controller: sectionCtrl,
-    },
-  ]);
+    events.scroll();
 
-  events.scroll();
-
-  expect(sectionCtrl).toHaveBeenCalledWith(
-    global.pageYOffset - sectionOneDur,
-    sectionTwoDur,
-  );
+    expect(sectionTwoCtrl).toHaveBeenCalledWith(
+      global.pageYOffset - sectionOneDur,
+      sectionTwoDur,
+    );
+  });
 });
