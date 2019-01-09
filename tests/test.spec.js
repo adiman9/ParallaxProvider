@@ -8,27 +8,6 @@ beforeEach(() => {
   });
 });
 
-test('it correctly adds one module to modules array', () => {
-  const p = new ParallaxProvider([{}]);
-  expect(p.modules.length).toBe(1);
-});
-
-test('it correctly adds two module to modules array', () => {
-  const p = new ParallaxProvider([{}, {}]);
-  expect(p.modules.length).toBe(2);
-});
-
-test('calls window.addEventListener() for scroll event', () => {
-  global.addEventListener = jest.fn();
-
-  const p = new ParallaxProvider([{}, {}]);
-
-  expect(global.addEventListener).toHaveBeenCalledWith(
-    'scroll',
-    expect.any(Function),
-  );
-});
-
 describe('scroll events with multiple sections', () => {
   let sectionOneCtrl = jest.fn();
   let sectionTwoCtrl = jest.fn();
@@ -48,6 +27,13 @@ describe('scroll events with multiple sections', () => {
         controller: sectionTwoCtrl,
       },
     ]);
+  });
+
+  test('calls window.addEventListener() for scroll event', () => {
+    expect(global.addEventListener).toHaveBeenCalledWith(
+      'scroll',
+      expect.any(Function),
+    );
   });
 
   test('it calls the controller on scroll', () => {
