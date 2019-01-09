@@ -23,11 +23,16 @@ function easeOutBack(t, b, c, d, s) {
 
 function phaseOne(offset, duration) {
   if (offset < duration) {
-    const scaleAmt = 0.4 * Math.min(offset / duration, 1);
-    fg.style.transform = `scale(${1 + scaleAmt})`;
-    mg.style.transform = `scale(${1 + scaleAmt * 0.24})`;
-    bg.style.transform = `scale(${1 + scaleAmt * 0.1})`;
-    title.style.transform = `scale(${1 + scaleAmt * 0.8})`;
+    const perc = offset / duration;
+    fg.style.transform = `scale(${1 + 0.4 * perc})`;
+    mg.style.transform = `scale(${1 + 0.1 * perc})`;
+    bg.style.transform = `scale(${1 + 0.04 * perc})`;
+    title.style.transform = `scale(${1 + 0.35 * perc})`;
+  } else {
+    fg.style.transform = `scale(1.4)`;
+    mg.style.transform = `scale(1.1)`;
+    bg.style.transform = `scale(1.04)`;
+    title.style.transform = `scale(1.35)`;
   }
 }
 
